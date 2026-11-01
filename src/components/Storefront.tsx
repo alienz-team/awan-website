@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState, useTransition } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp, Briefcase, ChevronLeft, ChevronRight, Globe, Languages, MapPin, Moon, Phone, Ruler, Sun, Timer, X } from "lucide-react";
 import { useApp } from "./Providers";
@@ -29,9 +30,7 @@ function Header({ s }: { s: SettingsT }) {
       )}
       <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-          <a href="#top" className="font-display text-xl font-semibold tracking-wide">
-            {lang === "ar" ? "أوان" : "AWAN"}<span className="text-bronze">.</span>
-          </a>
+          <a href="#top" aria-label="AWAN Decor"><Image alt="AWAN Decor" src="/logo.png" width={160} height={256} priority className="h-14 w-auto object-contain mix-blend-multiply dark:mix-blend-normal dark:rounded-sm" /></a>
           <nav className="hidden gap-7 text-sm md:flex">
             {links.map(([h, l]) => <a key={h} href={h} className="text-muted transition hover:text-ink">{t(l)}</a>)}
           </nav>
@@ -301,7 +300,7 @@ function Footer({ s }: { s: SettingsT }) {
   return (
     <footer id="contact" className="border-t border-line px-4 py-14 pb-28 md:pb-14">
       <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
-        <div><p className="font-display text-2xl">{bi(lang, s.brandNameAr, s.brandNameEn)}</p><p className="mt-2 text-sm text-muted">{bi(lang, s.sloganAr, s.sloganEn)}</p></div>
+        <div><Image alt="AWAN Decor" src="/logo.png" width={160} height={256} className="h-32 w-auto object-contain mix-blend-multiply dark:mix-blend-normal dark:rounded-sm" /><p className="mt-3 font-display text-2xl">{bi(lang, s.brandNameAr, s.brandNameEn)}</p><p className="mt-2 text-sm text-muted">{bi(lang, s.sloganAr, s.sloganEn)}</p></div>
         <ul className="space-y-2 text-sm">
           <li className="flex items-center gap-2"><Phone size={15} className="text-bronze" /><a href={`tel:${s.phoneNumber}`} dir="ltr">{s.phoneNumber}</a></li>
           <li className="flex items-center gap-2"><MapPin size={15} className="text-bronze" />{bi(lang, s.addressAr, s.addressEn)}</li>
