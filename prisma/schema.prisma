@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ProjectCategory {
+  VILLAS
+  APARTMENTS
+  COMMERCIAL
+  RENOVATION
+}
+
+enum QuoteStatus {
+  PENDING
+  CONTACTED
+  SITE_VISIT_SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+model Project {
+  id            String          @id @default(cuid())
+  titleAr       String
+  titleEn       String
+  slug          String          @unique
+  descriptionAr String
+  descriptionEn String
+  category      ProjectCategory
+  areaM2        Int
+  location      String
+  images        String[]
+  specs         Json?
+  isFeatured    Boolean         @default(false)
+  sortOrder     Int             @default(0)
+  isActive      Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+}
+
+model Service {
+  id             String   @id @default(cuid())
+  titleAr        String
+  titleEn        String
+  slug           String   @unique
+  descriptionAr  String
+  descriptionEn  String
+  featuresAr     String[]
+  featuresEn     String[]
+  carouselImages String[]
+  isFeatured     Boolean  @default(false)
+  sortOrder      Int      @default(0)
+  isActive       Boolean  @default(true)
+}
+
+model QuoteRequest {
+  id             String      @id @default(cuid())
+  clientName     String
+  clientPhone    String
+  city           String?
+  propertyType   String
+  areaM2         Int
+  finishingLevel String
+  budgetLyd      Int?
+  notes          String?
+  status         QuoteStatus @default(PENDING)
+  createdAt      DateTime    @default(now())
+}
+
+model HeroSlide {
+  id         String  @id @default(cuid())
+  titleAr    String
+  titleEn    String
+  subtitleAr String
+  subtitleEn String
+  imageUrl   String
+  ctaTextAr  String
+  ctaTextEn  String
+  ctaLink    String
+  sortOrder  Int     @default(0)
+  isActive   Boolean @default(true)
+}
+
+model SiteSettings {
+  id            String  @id @default("main")
+  brandNameAr   String
+  brandNameEn   String
+  sloganAr      String
+  sloganEn      String
+  aboutTextAr   String
+  aboutTextEn   String
+  whatsappNumber String
+  phoneNumber   String
+  email         String
+  addressAr     String
+  addressEn     String
+  tiktokUrl     String
+  promoBannerAr String
+  promoBannerEn String
+  isPromoActive Boolean @default(true)
+  seoTitle      String  @default("")
+  seoDescription String @default("")
+}
